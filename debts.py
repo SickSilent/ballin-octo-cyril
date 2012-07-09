@@ -71,10 +71,10 @@ def get_debts():
 				
 		if column and op:
 			if orderby:
-				print ' '.join(where[2:(final + 1)])
 				cur.execute("SELECT * FROM Debts WHERE %s %s ? ORDER BY %s ASC" % (column, op, orderby), (' '.join(where[2:(final + 1)]),))
 			else:
-				cur.execute("SELECT * FROM Debts WHERE %s %s ?" % (column, op), (' '.join(where[2:(final + 1)]),))
+				print ' '.join(where[2:])
+				cur.execute("SELECT * FROM Debts WHERE %s %s ?" % (column, op), (' '.join(where[2:]),))
 		else:
 			print "No such column."
 			return
@@ -134,6 +134,9 @@ def change_record():
 
 def remove_record():
 	result_list = get_debts()
+	if not result_list:
+		print "No matches found."
+		return
 	print_results(result_list)
 	num = raw_input("Which record to change? (number): ")
 	to_delete = result_list[int(num) - 1]
@@ -141,7 +144,7 @@ def remove_record():
 	
 	question = raw_input("Are you sure you want to delete this record (leave blank to cancel)? ")
 	if question:
-		cur.execute("DELETE FROM Debts WHERE Name = ? AND Date = ? AND Amount = ?", (to_change[0], to_change[1], to_change[2]))
+		cur.execute("DELETE FROM Debts WHERE Name = ? AND Date = ? AND Amount = ?", (to_delete[0], to_delete[1], to_delete[2]))
 		dbconn.commit()
 
 def input_loop():
