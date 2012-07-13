@@ -7,11 +7,14 @@ db_name = "debts.db"
 dbconn = sqlite3.connect(db_name)
 cur = dbconn.cursor()
 
+cur.execute("CREATE TABLE IF NOT EXISTS Debts(Name TEXT, Date TEXT, Amount INT, Paid BOOL, DatePaid TEXT)")
+cur.commit()
+
 def insert_debt():
 	name = raw_input("Name: ")
 	amount =  raw_input ("Amount (pesos): ")
 	date = raw_input("Date: ")
-	date_paid = raw_input("Date paid (blank for not paid): ")
+	date_paid = raw_input("Date paid (Leave blank for not paid): ")
 	paid = raw_input("Paid? (Leave blank for not paid): ")
 
 	amount = int(amount)
@@ -27,7 +30,7 @@ def get_debts():
 	column = ''
 	orderby = ''
 	n = ''
-	where = raw_input("Enter search query (in field = value form): ")
+	where = raw_input("Enter search query (<column> <op> <value>[, <order-by column>]): ")
 	if ('all' in where):
 		if ',' in where:
 			n = where.split(", ")[1]
@@ -111,7 +114,7 @@ def change_record():
 	amount =  raw_input ("Amount (pesos): ")
 	date = raw_input("Date: ")
 	date_paid = raw_input("Date paid: ")
-	paid = raw_input("Paid?: ")
+	paid = raw_input("Paid (1 for yes, 0 for no)?: ")
 
 	dict = OrderedDict([("Name", name), ("Date", date), ("Amount", amount), ("Paid", paid), ("DatePaid", date_paid)])
 	x = 0
