@@ -20,7 +20,7 @@ IRC bot made using Twisted
 
 debts.py
 --------
-Little thingy to record what people owe you. Made as an experiment with Python and SQLite. Relies on debts.db (for table structure).
+Little thingy to record what people owe you. Made as an experiment with Python and SQLite. Relies on debts.db, but the DB name can be changed in the script.
 
 randfloodbot.py
 ---------------
